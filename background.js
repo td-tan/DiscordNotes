@@ -1,18 +1,22 @@
 chrome.runtime.onInstalled.addListener(function() {
+    // Create Context Menues for selected Text
     chrome.contextMenus.create({
-        title: "Send To Discord",
+        title: "Send Text To Discord",
         id: "contextSelection",
         contexts: ["selection"],
-    }); 
+    });
+    // Create Context Menues for Image
     chrome.contextMenus.create({
-        title: "Send To Discord",
+        title: "Send Image To Discord",
         id: "contextImage",
         contexts: ["image"],
-    }); 
+    });
 });
+
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     if(info.menuItemId === "contextSelection") {
+        // Wait until set webhook
         chrome.storage.sync.get('webhookUrl', function(data) {
             const discordWebhook = data.webhookUrl;
 
@@ -21,6 +25,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         });
 
 
+        // Debugging
         console.log(info.selectionText);
         console.log(info.pageUrl);
         console.log(tab.title);
@@ -34,7 +39,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     if(info.menuItemId === "contextImage") {
         chrome.storage.sync.get('webhookUrl', function(data) {
             const discordWebhook = data.webhookUrl;
-            console.log(info);
+
             sendImageToDiscord(discordWebhook, tab.title, info.pageUrl, info.srcUrl);
 
         });
@@ -42,6 +47,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     }
 });
 
+// Simple usage of Discord webhook api
 function sendTextToDiscord(webhookUrl, message, title, pageUrl) {
     let data = {
         username: 'Note',

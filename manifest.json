@@ -1,7 +1,7 @@
 {
     "name": "DiscordNotes",
     "version": "1.0",
-    "description": "Take notes from your Chrome browser and store it in your private Discord Server",
+    "description": "Take notes from your Chrome browser and store it in your private Discord Server per Webhook",
     "permissions": ["contextMenus", "activeTab", "storage"],
     "content_scripts": [
         {
